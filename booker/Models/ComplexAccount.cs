@@ -52,7 +52,7 @@ namespace booker.Models
                 if (count < 0) count = result.Length - 1;
                 result[count] += 10;
                 remain -= 10;
-            }            
+            }
 
             return result;
         }
@@ -62,8 +62,23 @@ namespace booker.Models
             Segments = new Segment[segmentNum];
             Period[] periods = TimePeriod.GetPeriods(segmentNum);
             int[] amounts = DivideAmount(segmentNum, periods);
+            CheckAmount(amounts);
+
             for (int i = 0; i < segmentNum; i++)
                 Segments[i] = new Segment(amounts[i], periods[i]);
+        }
+
+        private void CheckAmount(int[] amounts) 
+        {
+            int testAmount = 0;
+            foreach (int amount in amounts)
+                testAmount += amount;
+            if (testAmount != Amount)
+            {
+                string errorMessage = "Ошибка распределения баланса по сегментам.\n" +
+                $" Заданный баланс: {Amount}\n Сумма значений сегментов: {testAmount}";
+                Logger.CreateLog(new Exception(errorMessage), ExceptionTag.Error);
+            }
         }
     }
 }

@@ -20,8 +20,7 @@ namespace booker.Views
             account = new ComplexAccount("Cчет", 5967);
             BindingContext = account;
 
-            Label name = new Label();
-            name.SetBinding(Label.TextProperty, "Name");
+            Title = account.Name;
             Label balance = new Label();
             balance.SetBinding(Label.TextProperty, "Amount");
             ListView segments = new ListView()
@@ -35,12 +34,19 @@ namespace booker.Views
                     return new ViewCell { View = segBalance };
                 })
             };
+            Button logPageButton = new Button() { Text = "Журнал" };
+            logPageButton.Clicked += LogButtonClicked;
 
-            StackLayout stackLayout2 = new StackLayout()
+            StackLayout stackLayout = new StackLayout()
             {
-                Children = { name, balance, segments }
+                Children = { balance, segments, logPageButton }
             };
-            Content = stackLayout2;
+            Content = stackLayout;
+        }
+
+        private async void LogButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LogPage());
         }
     }
 }
