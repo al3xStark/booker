@@ -7,10 +7,10 @@ using static Xamarin.Essentials.Permissions;
 
 namespace booker.ViewModels
 {
-    public class ComplexAcccountViewModel : INotifyPropertyChanged
+    public class ComplexAcccountViewModel : IAccountViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private ComplexAccount complexAccount;
+        private IAccount complexAccount;
 
         public ComplexAcccountViewModel()
         {
@@ -40,11 +40,10 @@ namespace booker.ViewModels
                 }
             }
         }
-        public Segment[] Segments => complexAccount.Segments;
+        public Segment[] Segments => ((ComplexAccount)complexAccount).Segments;
         protected void OnPropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

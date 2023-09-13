@@ -6,13 +6,13 @@ using Xamarin.Essentials;
 
 namespace booker.Models
 {
-    class ComplexAccount: Account
+    class ComplexAccount: IAccount
     {
         private int segmentsNum;
         private int balance;
-        public Segment[] Segments { get; private set; }
-
-        public new int Balance
+        
+        public string Title { get; set; }
+        public int Balance
         {
             get => balance;
             set
@@ -21,7 +21,7 @@ namespace booker.Models
                 BuildSegments(segmentsNum);
             }
         }
-
+        public Segment[] Segments { get; private set; }
         public ComplexAccount(int segmentsNum = 4)
         {
             this.segmentsNum = segmentsNum;
@@ -30,7 +30,7 @@ namespace booker.Models
         private int[] DivideAmount(int segmentNum, Period[] periods = null)
         {
             int[] result = new int[segmentNum];
-            periods = periods == null ? TimePeriod.GetPeriods(segmentNum) : periods;
+            periods = periods ?? TimePeriod.GetPeriods(segmentNum);
             int currentPeriod = TimePeriod.GetCurentPeriodNum(periods);
             for (int i = 0; i < currentPeriod; i++)
                     result[i] = 0;

@@ -16,7 +16,6 @@ namespace booker.Views
         public LogPage()
         {
             InitializeComponent();
-            Title = "Журнал";
             Content = new Editor()
             {
                 Text = GetLogs(),

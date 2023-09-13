@@ -4,9 +4,9 @@ using System.Text;
 
 namespace booker.Models
 {
-    public class Account
+    public interface IAccount
     {
-        public string Title { get; set; }
-        public int Balance { get; set; }
+        string Title { get; set; }
+        int Balance { get; set; }
     }
 }

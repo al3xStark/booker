@@ -4,10 +4,12 @@ using System.Text;
 
 namespace booker.Models
 {
-    class RegularAccount: Account
+    class RegularAccount: IAccount
     {
         public readonly int initialAmount;
-        public RegularAccount(string name, int amount)
+        public string Title { get; set; }
+        public int Balance { get; set; }
+        public RegularAccount()
         {            
             initialAmount = Balance;
         }
