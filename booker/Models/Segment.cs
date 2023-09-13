@@ -5,7 +5,7 @@ using System.Text;
 
 namespace booker.Models
 {
-    class Segment
+    public class Segment
     {
         public readonly int initialAmount;
         public readonly Period period;

@@ -8,11 +8,23 @@ namespace booker.Models
 {
     class ComplexAccount: Account
     {
-        public Segment[] Segments { get; set; }
+        private int segmentsNum;
+        private int balance;
+        public Segment[] Segments { get; private set; }
 
-        public ComplexAccount(string name, int amount, int segmentsNum = 4) : base(name, amount)
+        public new int Balance
         {
-            BuildSegments(segmentsNum);
+            get => balance;
+            set
+            {
+                balance = value;
+                BuildSegments(segmentsNum);
+            }
+        }
+
+        public ComplexAccount(int segmentsNum = 4)
+        {
+            this.segmentsNum = segmentsNum;
         }
 
         private int[] DivideAmount(int segmentNum, Period[] periods = null)
@@ -27,8 +39,8 @@ namespace booker.Models
             int leftFromCurrentSegment = periods[currentPeriod].DaysLeft;
             int daysLeft = (segmentNum - currentPeriod - 1) * segmentsDuration + leftFromCurrentSegment;
 
-            int remain = Amount % daysLeft;
-            int absolute = (Amount - remain) / daysLeft;
+            int remain = Balance % daysLeft;
+            int absolute = (Balance - remain) / daysLeft;
             int approximate, r;
             
             for (int i = currentPeriod; i < segmentNum; i++)
@@ -59,11 +71,11 @@ namespace booker.Models
 
         private void BuildSegments(int segmentNum)
         {
-            Segments = new Segment[segmentNum];
             Period[] periods = TimePeriod.GetPeriods(segmentNum);
             int[] amounts = DivideAmount(segmentNum, periods);
             CheckAmount(amounts);
 
+            Segments = new Segment[segmentNum];
             for (int i = 0; i < segmentNum; i++)
                 Segments[i] = new Segment(amounts[i], periods[i]);
         }
@@ -73,10 +85,10 @@ namespace booker.Models
             int testAmount = 0;
             foreach (int amount in amounts)
                 testAmount += amount;
-            if (testAmount != Amount)
+            if (testAmount != Balance)
             {
                 string errorMessage = "Ошибка распределения баланса по сегментам.\n" +
-                $" Заданный баланс: {Amount}\n Сумма значений сегментов: {testAmount}";
+                $" Заданный баланс: {Balance}\n Сумма значений сегментов: {testAmount}";
                 Logger.CreateLog(new Exception(errorMessage), ExceptionTag.Error);
             }
         }

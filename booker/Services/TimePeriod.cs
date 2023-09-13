@@ -42,7 +42,7 @@ namespace booker.Services
 
     }
 
-    struct Period
+    public struct Period
     {
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }

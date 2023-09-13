@@ -7,9 +7,9 @@ namespace booker.Models
     class RegularAccount: Account
     {
         public readonly int initialAmount;
-        public RegularAccount(string name, int amount) : base(name, amount)
+        public RegularAccount(string name, int amount)
         {            
-            initialAmount = Amount;
+            initialAmount = Balance;
         }
     }
 }

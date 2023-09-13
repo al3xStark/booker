@@ -17,12 +17,11 @@ namespace booker.Views
         {
             InitializeComponent();
             Title = "Журнал";
-            Editor logsEditor = new Editor()
+            Content = new Editor()
             {
                 Text = GetLogs(),
                 IsReadOnly = true
             };
-            Content = logsEditor;
         }
         private string GetLogs()
         {

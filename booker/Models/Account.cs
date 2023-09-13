@@ -6,13 +6,7 @@ namespace booker.Models
 {
     public class Account
     {
-        public string Name { get; set; }
-        public int Amount { get; set; }
-
-        public Account(string name, int amount)
-        {
-            Name = name;
-            Amount = amount;
-        }
+        public string Title { get; set; }
+        public int Balance { get; set; }
     }
 }

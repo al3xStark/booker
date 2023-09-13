@@ -7,11 +7,12 @@ namespace booker.Services
 {
     static public class Logger
     {
-        static private string LogInfo(Exception e) => e.Message +
-                "\nОбъект: " + e.Source +
-                "\nМетод, вызвавший исключение: " + e.TargetSite +
-                "\nСтэк: " + e.StackTrace +
-                "\n====================================";
+        static private string LogInfo(string type, Exception e) => 
+            type + ": " + e.Message +
+            "\nОбъект: " + e.Source +
+            "\nМетод, вызвавший исключение: " + e.TargetSite +
+            "\nСтэк: " + e.StackTrace +
+            "\n====================================";
 
         static public void CreateLog(Exception e, ExceptionTag tag)
         {
@@ -22,18 +23,18 @@ namespace booker.Services
             switch (tag)
             {
                 case ExceptionTag.Error:
-                    type = "Error: ";
+                    type = "Error";
                     break;
                 case ExceptionTag.Warning:
-                    type = "Warning: ";
+                    type = "Warning";
                     break;
                 case ExceptionTag.Info:
-                    type = "Info: ";
+                    type = "Info";
                     break;
                 default:
                     break;
             }
-            stream.WriteLine(type + LogInfo(e));
+            stream.WriteLine(LogInfo(type, e));
             stream.Close();
         }
     }
