@@ -61,7 +61,7 @@ namespace booker.Models
             while (remain > 0)
             {
                 count--;
-                if (count < 0) count = result.Length - 1;
+                if (count < currentPeriod) count = result.Length - 1;
                 result[count] += 10;
                 remain -= 10;
             }

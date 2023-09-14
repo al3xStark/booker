@@ -11,5 +11,18 @@ namespace booker.ViewModels
     {
         public ComplexAcccountViewModel() : base(new ComplexAccount()) { }
         public Segment[] Segments => ((ComplexAccount)account).Segments;
+        public new int Balance
+        {
+            get => account.Balance;
+            set
+            {
+                if (account.Balance != value)
+                {
+                    account.Balance = value;
+                    OnPropertyChanged("Balance");
+                    OnPropertyChanged("Segments");
+                }
+            }
+        }
     }
 }

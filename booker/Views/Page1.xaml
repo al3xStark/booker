@@ -4,7 +4,7 @@
              x:Class="booker.Views.Page1" Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text= "{Binding Balance}" FontSize="35"/>
+            <Entry x:Name="balanceEntry" Text= "{Binding Balance}" FontSize="30"/>
             <ListView x:Name="segments" ItemsSource="{Binding Segments}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -12,6 +12,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Text="Обновить" Clicked="BalanceChanged"/>
             <Button Text="Журнал" Clicked="LogButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>

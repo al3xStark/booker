@@ -14,10 +14,11 @@ namespace booker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Page1 : ContentPage
     {
+        public ComplexAcccountViewModel account;
         public Page1()
         {
             InitializeComponent();
-            var account = new ComplexAcccountViewModel
+            account = new ComplexAcccountViewModel
             {
                 Title = "Счет",
                 Balance = 5397
@@ -49,6 +50,11 @@ namespace booker.Views
             //};
             //Content = stackLayout;
             #endregion
+        }
+
+        private void BalanceChanged(object sender, EventArgs e)
+        {
+            
         }
 
         private async void LogButtonClicked(object sender, EventArgs e)
