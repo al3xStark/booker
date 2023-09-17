@@ -18,10 +18,9 @@ namespace booker.Views
         public Page1()
         {
             InitializeComponent();
-            account = new ComplexAcccountViewModel
+            account = new ComplexAcccountViewModel(5397, 4)
             {
-                Title = "Счет",
-                Balance = 5397
+                Title = "Счет"
             };
             BindingContext = account;
 

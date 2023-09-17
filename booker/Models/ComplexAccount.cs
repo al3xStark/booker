@@ -8,7 +8,6 @@ namespace booker.Models
 {
     class ComplexAccount: IAccount
     {
-        private int segmentsNum;
         private int balance;
         
         public string Title { get; set; }
@@ -18,32 +17,33 @@ namespace booker.Models
             set
             {
                 balance = value;
-                BuildSegments(segmentsNum);
+                UpdateSegments(Segments.Length);
             }
         }
-        public Segment[] Segments { get; private set; }
-        public ComplexAccount(int segmentsNum = 4)
+        public Segment[] Segments { get; set; }
+        public ComplexAccount(int balance, int segmentsNum)
         {
-            this.segmentsNum = segmentsNum;
+            this.balance = balance;
+            BuildSegments(segmentsNum);
         }
 
-        private int[] DivideAmount(int segmentNum, Period[] periods = null)
+        private int[] DivideAmount(int segmentsNum, Period[] periods = null)
         {
-            int[] result = new int[segmentNum];
-            periods = periods ?? TimePeriod.GetPeriods(segmentNum);
+            int[] result = new int[segmentsNum];
+            periods = periods ?? TimePeriod.GetPeriods(segmentsNum);
             int currentPeriod = TimePeriod.GetCurentPeriodNum(periods);
             for (int i = 0; i < currentPeriod; i++)
                     result[i] = 0;
 
             int segmentsDuration = periods[currentPeriod].Duration;
             int leftFromCurrentSegment = periods[currentPeriod].DaysLeft;
-            int daysLeft = (segmentNum - currentPeriod - 1) * segmentsDuration + leftFromCurrentSegment;
+            int daysLeft = (segmentsNum - currentPeriod - 1) * segmentsDuration + leftFromCurrentSegment;
 
             int remain = Balance % daysLeft;
             int absolute = (Balance - remain) / daysLeft;
             int approximate, r;
             
-            for (int i = currentPeriod; i < segmentNum; i++)
+            for (int i = currentPeriod; i < segmentsNum; i++)
             {
                 if (i == currentPeriod)
                     approximate = absolute * leftFromCurrentSegment;
@@ -69,14 +69,14 @@ namespace booker.Models
             return result;
         }
 
-        private void BuildSegments(int segmentNum)
+        private void BuildSegments(int segmentsNum)
         {
-            Period[] periods = TimePeriod.GetPeriods(segmentNum);
-            int[] amounts = DivideAmount(segmentNum, periods);
+            Period[] periods = TimePeriod.GetPeriods(segmentsNum);
+            int[] amounts = DivideAmount(segmentsNum, periods);
             CheckAmount(amounts);
 
-            Segments = new Segment[segmentNum];
-            for (int i = 0; i < segmentNum; i++)
+            Segments = new Segment[segmentsNum];
+            for (int i = 0; i < segmentsNum; i++)
                 Segments[i] = new Segment(amounts[i], periods[i]);
         }
 
@@ -91,6 +91,15 @@ namespace booker.Models
                 $" Заданный баланс: {Balance}\n Сумма значений сегментов: {testAmount}";
                 Logger.CreateLog(new Exception(errorMessage), ExceptionTag.Error);
             }
+        }
+
+        private void UpdateSegments(int segmentsNum)
+        {
+            int[] amounts = DivideAmount(segmentsNum);
+            CheckAmount(amounts);
+
+            for (int i = 0; i < segmentsNum; i++)
+                Segments[i].Amount = amounts[i];
         }
     }
 }

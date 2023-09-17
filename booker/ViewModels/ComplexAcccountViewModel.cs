@@ -9,8 +9,16 @@ namespace booker.ViewModels
 {
     public class ComplexAcccountViewModel : AccountViewModel
     {
-        public ComplexAcccountViewModel() : base(new ComplexAccount()) { }
-        public Segment[] Segments => ((ComplexAccount)account).Segments;
+        public ComplexAcccountViewModel(int balance, int segmentNum) : base(new ComplexAccount(balance, segmentNum)) 
+        {
+            Segment[] segments = ((ComplexAccount)account).Segments;
+            Segments = new SegmentViewModel[segments.Length];
+            for (int i = 0; i < segments.Length; i++)
+            {
+                Segments[i] = new SegmentViewModel(segments[i]);
+            }
+        }
+        public SegmentViewModel[] Segments { get; private set; }
         public new int Balance
         {
             get => account.Balance;
@@ -20,7 +28,8 @@ namespace booker.ViewModels
                 {
                     account.Balance = value;
                     OnPropertyChanged("Balance");
-                    OnPropertyChanged("Segments");
+                    foreach (var segment in Segments)
+                        segment.OnPropertyChanged("Amount");
                 }
             }
         }
