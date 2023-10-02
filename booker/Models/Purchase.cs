@@ -9,7 +9,7 @@ namespace booker.Models
     public class Purchase
     {
         [PrimaryKey, AutoIncrement, Column("id")]
-        public int ID { get; set; }
+        public int ID { get; }
         [Column("title")]
         public string Title { get; set; }
         [Column("value")]

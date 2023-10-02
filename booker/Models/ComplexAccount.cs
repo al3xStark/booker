@@ -1,4 +1,5 @@
 ﻿using booker.Services;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,11 +7,15 @@ using Xamarin.Essentials;
 
 namespace booker.Models
 {
-    class ComplexAccount: IAccount
+    [Table("ComplexAccounts")]
+    public class ComplexAccount: IAccount
     {
         private int balance;
-        
+        [PrimaryKey, AutoIncrement, Column("id")]
+        public int ID { get; set; }
+        [Column("title")]
         public string Title { get; set; }
+        [Column("balance")]
         public int Balance
         {
             get => balance;
@@ -26,6 +31,7 @@ namespace booker.Models
             this.balance = balance;
             BuildSegments(segmentsNum);
         }
+        public ComplexAccount() { }
 
         private int[] DivideAmount(int segmentsNum, Period[] periods = null)
         {
@@ -77,7 +83,7 @@ namespace booker.Models
 
             Segments = new Segment[segmentsNum];
             for (int i = 0; i < segmentsNum; i++)
-                Segments[i] = new Segment(amounts[i], periods[i]);
+                Segments[i] = new Segment(ID, amounts[i], periods[i]);
         }
 
         private void CheckAmount(int[] amounts) 

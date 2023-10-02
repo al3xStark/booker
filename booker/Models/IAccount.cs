@@ -6,6 +6,7 @@ namespace booker.Models
 {
     public interface IAccount
     {
+        int ID { get; set; }
         string Title { get; set; }
         int Balance { get; set; }
     }

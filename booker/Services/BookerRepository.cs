@@ -11,6 +11,7 @@ namespace booker.Services
         public const string DATABASE_NAME = "booker.db";
         private static BookerRepository instance;
         private static SQLiteConnection database;
+        private static AccountRepository accountRep;
         private static PurchaseRepository purchaseRep;
         private static ProductRepository productRep;
 
@@ -27,6 +28,15 @@ namespace booker.Services
                 if (instance == null)
                     instance = new BookerRepository();
                 return instance;
+            }
+        }
+        public static AccountRepository Accounts
+        {
+            get
+            {
+                if (accountRep == null)
+                    accountRep = new AccountRepository(database);
+                return accountRep;
             }
         }
         public static PurchaseRepository Purchases
