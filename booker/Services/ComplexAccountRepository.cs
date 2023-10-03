@@ -12,6 +12,7 @@ namespace booker.Services
         public ComplexAccountRepository(SQLiteConnection database)
         {
             this.database = database;
+            SegmentRepository.GetInstance(database);
             database.CreateTable<ComplexAccount>();
         }
         public IEnumerable<IAccount> GetAccounts()

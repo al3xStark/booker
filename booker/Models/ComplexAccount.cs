@@ -2,6 +2,7 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xamarin.Essentials;
 
@@ -11,6 +12,7 @@ namespace booker.Models
     public class ComplexAccount: IAccount
     {
         private int balance;
+        private Segment[] segments;
         [PrimaryKey, AutoIncrement, Column("id")]
         public int ID { get; set; }
         [Column("title")]
@@ -22,14 +24,30 @@ namespace booker.Models
             set
             {
                 balance = value;
-                UpdateSegments(Segments.Length);
+                if (segments != null)
+                {
+                    UpdateSegments(segments.Length);
+                    foreach (Segment segment in segments)
+                        SegmentRepository.SaveSegment(segment);
+                }
             }
         }
-        public Segment[] Segments { get; set; }
+        public Segment[] Segments 
+        { 
+            get
+            {
+                if (segments is null)
+                    segments = SegmentRepository.GetAccountSegments(ID).ToArray();
+                return segments;
+            }
+            set => segments = value;
+        }
         public ComplexAccount(int balance, int segmentsNum)
         {
             this.balance = balance;
             BuildSegments(segmentsNum);
+            foreach (Segment segment in segments)
+                SegmentRepository.SaveSegment(segment);
         }
         public ComplexAccount() { }
 
@@ -81,9 +99,9 @@ namespace booker.Models
             int[] amounts = DivideAmount(segmentsNum, periods);
             CheckAmount(amounts);
 
-            Segments = new Segment[segmentsNum];
+            segments = new Segment[segmentsNum];
             for (int i = 0; i < segmentsNum; i++)
-                Segments[i] = new Segment(ID, amounts[i], periods[i]);
+                segments[i] = new Segment(ID, amounts[i], periods[i]);
         }
 
         private void CheckAmount(int[] amounts) 
@@ -105,7 +123,7 @@ namespace booker.Models
             CheckAmount(amounts);
 
             for (int i = 0; i < segmentsNum; i++)
-                Segments[i].Amount = amounts[i];
+                segments[i].Amount = amounts[i];
         }
     }
 }

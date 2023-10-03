@@ -18,7 +18,7 @@ namespace booker.Models
         public int Balance { get; set; }
         public RegularAccount()
         {            
-            InitialAmount = Balance;
+            
         }
     }
 }
