@@ -14,6 +14,7 @@ namespace booker.Services
         private static AccountRepository accountRep;
         private static PurchaseRepository purchaseRep;
         private static ProductRepository productRep;
+        private static AccountPurchaseRepository accountPurchaseRep;
 
         private BookerRepository()
         {
@@ -55,6 +56,15 @@ namespace booker.Services
                 if (productRep == null)
                     productRep = new ProductRepository(database);
                 return productRep;
+            }
+        }
+        public static AccountPurchaseRepository AccountPurchase
+        {
+            get
+            {
+                if (accountPurchaseRep == null)
+                    accountPurchaseRep = new AccountPurchaseRepository(database);
+                return accountPurchaseRep;
             }
         }
     }
