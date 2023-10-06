@@ -32,6 +32,7 @@ namespace booker.Models
                 }
             }
         }
+        public List<Purchase> Purchases => BookerRepository.AccountPurchase.GetPurchases(ID, AccountType.ComplexAccount).ToList();
         public Segment[] Segments 
         { 
             get

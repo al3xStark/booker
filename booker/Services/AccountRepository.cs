@@ -48,6 +48,10 @@ namespace booker.Services
             if (account is ComplexAccount) return AccountType.ComplexAccount;
             else return 0;
         }
+        public Account GetAccount(int accountID, AccountType type)
+        {
+            return database.Table<Account>().First(x => x.AccountID == accountID && x.Type == type);
+        }
         public IEnumerable<IAccount> GetAccounts()
         {
             var list = new List<IAccount>();
@@ -55,7 +59,7 @@ namespace booker.Services
                 list.AddRange(account.GetAccounts());
             return list;
         }
-        public IAccount GetAccount(int id)
+        public IAccount FindAccount(int id)
         {
             var account = database.Get<Account>(id);
             var repository = GetRepository(account.Type);

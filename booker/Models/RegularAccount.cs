@@ -1,12 +1,14 @@
-﻿using SQLite;
+﻿using booker.Services;
+using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace booker.Models
 {
     [Table("RegularAccounts")]
-    class RegularAccount: IAccount
+    public class RegularAccount: IAccount
     {
         [PrimaryKey, AutoIncrement, Column("id")]
         public int ID { get; set; }
@@ -16,6 +18,7 @@ namespace booker.Models
         public int InitialAmount { get; private set; }
         [Column("balance")]
         public int Balance { get; set; }
+        public List<Purchase> Purchases => BookerRepository.AccountPurchase.GetPurchases(ID, AccountType.RegularAccount).ToList();
         public RegularAccount()
         {            
             

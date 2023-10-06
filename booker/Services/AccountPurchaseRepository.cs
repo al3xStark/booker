@@ -20,7 +20,7 @@ namespace booker.Services
             return database.Delete<AccountPurchase>(id);
         }
 
-        public IEnumerable<Purchase> GetPurchases(IAccount account)
+        public IEnumerable<Purchase> GetPurchases(Account account)
         {
             var purchases = new List<Purchase>();
             var list = database.Table<AccountPurchase>().Where(x => x.AccountID == account.ID).ToList();
@@ -28,12 +28,16 @@ namespace booker.Services
                 purchases.Add(BookerRepository.Purchases.GetPurchase(item.PurchaseID));
             return purchases;
         }
+        public IEnumerable<Purchase> GetPurchases(int account_id, AccountType type)
+        {
+            return GetPurchases(BookerRepository.Accounts.GetAccount(account_id, type));
+        }
         public IEnumerable<IAccount> GetAccounts(Purchase purchase)
         {
             var accounts = new List<IAccount>();
             var list = database.Table<AccountPurchase>().Where(x => x.PurchaseID == purchase.ID).ToList();
             foreach (var item in list)
-                accounts.Add(BookerRepository.Accounts.GetAccount(item.AccountID));
+                accounts.Add(BookerRepository.Accounts.FindAccount(item.AccountID));
             return accounts;
         }
 

@@ -9,5 +9,6 @@ namespace booker.Models
         int ID { get; set; }
         string Title { get; set; }
         int Balance { get; set; }
+        List<Purchase> Purchases { get; }
     }
 }

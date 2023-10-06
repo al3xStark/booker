@@ -3,6 +3,7 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace booker.Models
@@ -20,6 +21,14 @@ namespace booker.Models
         public int Amount { get; set; }
         [Column("initial_amount")]
         public int InitialAmount { get; set; }
+        public List<Purchase> Purchases
+        {
+            get
+            {
+                var purchases = BookerRepository.AccountPurchase.GetPurchases(AccountID, AccountType.ComplexAccount);
+                return purchases.Where(x => x.Created >= period.Start && x.Created <= period.End).ToList();
+            }
+        }
         public Segment(int account_id, int amount, Period period)
         {
             AccountID = account_id;

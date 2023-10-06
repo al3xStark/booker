@@ -35,6 +35,7 @@ namespace booker.ViewModels
                 }
             }
         }
+        public List<Purchase> Purchases => account.Purchases;
         protected void OnPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
