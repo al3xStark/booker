@@ -4,6 +4,8 @@ using Xamarin.Forms.Xaml;
 using booker.Views;
 using booker.Services;
 using System.IO;
+using booker.Models;
+using System.Collections.Generic;
 
 namespace booker
 {
@@ -22,8 +24,11 @@ namespace booker
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new Page1());
+            database = BookerRepository.Instance;
+            List<IAccount> accounts = (List<IAccount>)BookerRepository.Accounts.GetAccounts();
+            if (accounts.Count == 0)
+                MainPage = new CreateAccountPage();
+            else MainPage = new NavigationPage(new Page1());
         }
 
         protected override void OnStart()

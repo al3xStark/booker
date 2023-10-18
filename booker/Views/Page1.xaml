@@ -12,7 +12,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Обновить" Clicked="BalanceChanged"/>
+            <Button Text="Обновить"/>
             <Button Text="Журнал" Clicked="LogButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>

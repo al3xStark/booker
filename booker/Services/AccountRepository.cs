@@ -8,11 +8,6 @@ using Xamarin.Forms;
 
 namespace booker.Services
 {
-    public enum AccountType
-    {
-        RegularAccount,
-        ComplexAccount
-    }
     public class AccountRepository
     {
         SQLiteConnection database;
@@ -24,9 +19,12 @@ namespace booker.Services
             this.database = database;
             database.CreateTable<Account>();
             regularAccountRep = new RegularAccountRepository(database);
-            accounts.Add(regularAccountRep);
             complexAccountRep = new ComplexAccountRepository(database);
-            accounts.Add(complexAccountRep);
+            accounts = new List<IAccountRepository>
+            {
+                regularAccountRep,
+                complexAccountRep
+            };
         }
         public RegularAccountRepository RegularAccounts => regularAccountRep;
         public ComplexAccountRepository ComplexAccounts => complexAccountRep;

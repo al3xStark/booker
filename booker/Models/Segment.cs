@@ -21,6 +21,7 @@ namespace booker.Models
         public int Amount { get; set; }
         [Column("initial_amount")]
         public int InitialAmount { get; set; }
+        [Ignore]
         public List<Purchase> Purchases
         {
             get

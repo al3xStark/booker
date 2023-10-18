@@ -32,7 +32,9 @@ namespace booker.Models
                 }
             }
         }
+        [Ignore]
         public List<Purchase> Purchases => BookerRepository.AccountPurchase.GetPurchases(ID, AccountType.ComplexAccount).ToList();
+        [Ignore]
         public Segment[] Segments 
         { 
             get
@@ -43,8 +45,9 @@ namespace booker.Models
             }
             set => segments = value;
         }
-        public ComplexAccount(int balance, int segmentsNum)
+        public ComplexAccount(string title, int balance, int segmentsNum)
         {
+            Title = title;
             this.balance = balance;
             BuildSegments(segmentsNum);
             foreach (Segment segment in segments)

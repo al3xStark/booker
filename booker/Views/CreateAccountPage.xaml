@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="booker.Views.CreateAccountPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="title" Placeholder="Название" Text="{Binding Title}" TextChanged="Title_TextChanged"/>
+            <Label x:Name="titleErrorMessage" IsVisible="false" BackgroundColor="#FF9393"/>
+            <Entry x:Name="amount" Placeholder="Начальная сумма" Keyboard="Numeric" Text="{Binding Amount}" TextChanged="Amount_TextChanged"/>
+            <Label x:Name="amountErrorMessage" IsVisible="false" BackgroundColor="#FF9393"/>
+            <Picker x:Name="accountType" Title="Тип счета" ItemsSource="{Binding AccountTypes}" SelectedIndexChanged="AccountType_SelectedIndexChanged"/>
+            <Label x:Name="accountTypeErrorMessage" IsVisible="false" BackgroundColor="#FF9393"/>
+            <Entry x:Name="segmentsNum" Placeholder="Количество сегментов" Keyboard="Numeric" Text="{Binding SegmentsNum}" IsVisible="false" TextChanged="SegmentsNum_TextChanged"/>
+            <Label x:Name="segmentsNumErrorMessage" IsVisible="false" BackgroundColor="#FF9393"/>
+            <Button x:Name="confirm" Text="Подтвердить" VerticalOptions="EndAndExpand" Clicked="ConfirmButton_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -9,7 +9,7 @@ namespace booker.ViewModels
 {
     public class ComplexAcccountViewModel : AccountViewModel
     {
-        public ComplexAcccountViewModel(int balance, int segmentNum) : base(new ComplexAccount(balance, segmentNum)) 
+        public ComplexAcccountViewModel(string title, int balance, int segmentNum) : base(new ComplexAccount(title, balance, segmentNum)) 
         {
             Segment[] segments = ((ComplexAccount)account).Segments;
             Segments = new SegmentViewModel[segments.Length];

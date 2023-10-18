@@ -18,10 +18,7 @@ namespace booker.Views
         public Page1()
         {
             InitializeComponent();
-            account = new ComplexAcccountViewModel(5397, 4)
-            {
-                Title = "Счет"
-            };
+            account = new ComplexAcccountViewModel("Счет", 5397, 4);
             BindingContext = account;
 
             #region _VIEW_
@@ -49,11 +46,6 @@ namespace booker.Views
             //};
             //Content = stackLayout;
             #endregion
-        }
-
-        private void BalanceChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private async void LogButtonClicked(object sender, EventArgs e)
